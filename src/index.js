@@ -10,6 +10,15 @@ const defaultCacheAge = 24 * 60 * 60;
 
 const wrap = value => ({ value, timestamp: Date.now() });
 
+/**
+ * @description A simple cache mechanisms that is based on IndexDB.
+ * @example
+ * const { store, set, get, clear, del } = makeIDB("workable-store");
+ *
+ * idb.get("myKey", { fetch: performFetch, maxAge: 100 });
+ * // if 'myKey' does not exists, it fetches and stores the result for 100 seconds
+ */
+
 export default name => {
   if (!name) {
     throw new Error("Please pass a name for the idb store");
