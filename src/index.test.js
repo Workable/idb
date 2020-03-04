@@ -7,12 +7,14 @@ beforeEach(() => {
   idb = makeIDB("my-store");
 });
 
+afterEach(() => idb.clear());
+
 describe("cache", () => {
   it("sets a value", async () => {
     jestMockTime();
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
     await idb.set("myKey", "myValue");
-    expect(await indexDBGet("myKey", store)).toEqual({
+    expect(await indexDBGet("myKey", idb.store)).toEqual({
       timestamp: 1000,
       value: "myValue"
     });
@@ -20,7 +22,7 @@ describe("cache", () => {
 
   it("sets a value if not exist", async () => {
     jestMockTime();
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
 
     const fetchSpy = jest
       .fn()
@@ -29,7 +31,7 @@ describe("cache", () => {
 
     expect(value).toBe("myValue");
     expect(fetchSpy).toBeCalledTimes(1);
-    expect(await indexDBGet("myKey", store)).toEqual({
+    expect(await indexDBGet("myKey", idb.store)).toEqual({
       timestamp: 1000,
       value: "myValue"
     });
@@ -37,7 +39,7 @@ describe("cache", () => {
 
   it("gets the cached value if exists", async () => {
     const setTime = jestMockTime();
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
 
     const fetchSpy = jest.fn();
     await idb.set("myKey", "myValue");
@@ -51,39 +53,39 @@ describe("cache", () => {
 
   it("deletes the cached value", async () => {
     const setTime = jestMockTime();
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
 
     await idb.set("myKey", "myValue");
 
     setTime(100);
-    expect(await indexDBGet("myKey", store)).toEqual({
+    expect(await indexDBGet("myKey", idb.store)).toEqual({
       timestamp: 1000,
       value: "myValue"
     });
     await idb.del("myKey");
 
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
   });
 
   it("clears the cache", async () => {
     const setTime = jestMockTime();
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
 
     await idb.set("myKey", "myValue");
 
     setTime(100);
-    expect(await indexDBGet("myKey", store)).toEqual({
+    expect(await indexDBGet("myKey", idb.store)).toEqual({
       timestamp: 1000,
       value: "myValue"
     });
     await idb.clear();
 
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
   });
 
   it("fetches the value if expires", async () => {
     const setTime = jestMockTime();
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
 
     await idb.set("myKey", "myValue");
 
@@ -115,7 +117,7 @@ describe("cache", () => {
 
   it("doesn't fetch if doesn't expire for just a ms", async () => {
     const setTime = jestMockTime();
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
 
     await idb.set("myKey", "myValue");
 
@@ -147,7 +149,7 @@ describe("cache", () => {
 
   it("aborts the fetch process", async () => {
     const setTime = jestMockTime();
-    expect(await indexDBGet("myKey", store)).toBeUndefined();
+    expect(await indexDBGet("myKey", idb.store)).toBeUndefined();
 
     await idb.set("myKey", "myValue");
 

@@ -15,22 +15,7 @@ module.exports = {
         test: /\.m?js$/,
         exclude: /\/node_modules\/(?!(idb-keyval))\/.*/,
         use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              [
-                "@babel/env",
-                {
-                  useBuiltIns: 'entry',
-                  corejs: 3,
-                  debug: true,
-                  targets: {
-                    "browsers": ["last 2 versions", "safari >= 7"]
-                  }
-                }
-              ]
-            ]
-          }
+          loader: "babel-loader"
         }
       }
     ]
