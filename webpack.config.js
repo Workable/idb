@@ -7,15 +7,36 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "idb.js",
     library: "@workablehr/idb",
-    libraryTarget: "umd"
+    libraryTarget: "commonjs2"
+  },
+  optimization: {
+    minimize: false
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /[\\/]node_modules[\\/]/,
+        test: /\.m?js$/,
+        exclude: /\/node_modules\/(?!(idb-keyval))\/.*/,
         use: {
-          loader: "babel-loader"
+          loader: "babel-loader",
+          options: {
+            presets: [
+              [
+                "@babel/env",
+                {
+                  useBuiltIns: 'entry',
+                  corejs: 3,
+                  debug: true,
+                  targets: {
+                    "browsers": ["last 2 versions", "safari >= 7"]
+                  }
+                }
+              ]
+            ],
+            plugins: [
+              // ['@babel/plugin-transform-arrow-functions', {spec: true}]
+            ]
+          }
         }
       }
     ]

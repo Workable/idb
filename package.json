@@ -3,8 +3,7 @@
   "description": "Request",
   "license": "UNLICENSED",
   "version": "0.0.2",
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "main": "dist/idb.js",
   "keywords": [
     "json:api",
     "client",
@@ -13,9 +12,7 @@
   ],
   "files": [
     "dist",
-    "lib",
-    "src",
-    "es"
+    "src"
   ],
   "sideEffects": false,
   "npmName": "@workablehr/idb",
@@ -29,32 +26,31 @@
   ],
   "scripts": {
     "clean": "rimraf lib dist es coverage",
-    "build:commonjs": "BABEL_ENV=commonjs babel src --out-dir lib",
-    "build:es": "babel src --out-dir es",
-    "build:umd": "webpack",
-    "build": "yarn build:commonjs && yarn build:es && yarn build:umd",
+    "build": "webpack",
     "test": "jest --config ./jest/config.js",
     "prepublishOnly": "yarn clean && yarn build",
     "publish:beta": "npm publish --tag=next",
     "docs": "jsdoc -c doc.conf.json"
   },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  },
   "dependencies": {
-    "@babel/runtime": "7.8.3",
     "idb-keyval": "3.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.3",
-    "@babel/core": "7.8.3",
-    "@babel/plugin-transform-modules-commonjs": "7.8.3",
-    "@babel/plugin-transform-runtime": "7.8.3",
-    "@babel/preset-env": "7.8.3",
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.8.6",
+    "@babel/plugin-transform-arrow-functions": "^7.8.3",
+    "@babel/preset-env": "7.8.6",
+    "babel-core": "7.0.0-bridge.0",
     "babel-jest": "25.1.0",
     "babel-loader": "8.0.6",
     "core-js": "3.6.4",
     "docdash": "1.1.1",
     "fake-indexeddb": "2.1.1",
     "jest": "25.1.0",
-    "webpack": "4.41.5",
-    "webpack-cli": "3.3.10"
+    "webpack": "4.42.0",
+    "webpack-cli": "3.3.11"
   }
 }
