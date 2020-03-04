@@ -9,9 +9,6 @@ module.exports = {
     library: "@workablehr/idb",
     libraryTarget: "commonjs2"
   },
-  optimization: {
-    minimize: false
-  },
   module: {
     rules: [
       {
@@ -32,9 +29,6 @@ module.exports = {
                   }
                 }
               ]
-            ],
-            plugins: [
-              // ['@babel/plugin-transform-arrow-functions', {spec: true}]
             ]
           }
         }
