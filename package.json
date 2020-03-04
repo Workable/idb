@@ -2,7 +2,7 @@
   "name": "@workablehr/idb",
   "description": "Request",
   "license": "UNLICENSED",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "dist/idb.js",
   "keywords": [
     "json:api",
